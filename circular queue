@@ -1,0 +1,90 @@
+#include<iostream>
+using namespace std;
+class queue{
+	public:
+		int *arr;
+		int capacity;
+		int size;
+		int front,rear;
+		queue(int n){
+			capacity=n;
+			size=capacity-1;
+			arr=new int[capacity];
+			front=rear=-1;
+		}
+		bool isempty(){
+			if(front==-1){
+				return true;
+			}
+			return false;
+		}
+		bool full(){
+		if((rear+1)%capacity==front){
+			return true;
+			}
+			return false;	
+		}
+		void add(int n){
+			if(full()){
+			cout<<"queue is full";	
+			return;
+			}
+			else if(rear==-1){
+				rear++;
+				arr[rear]=n;
+				return;
+			}
+			rear=(rear+1)%capacity;
+			arr[rear]=n;
+			if(front==-1){
+				front++;
+			}
+		}
+		
+		void idelete(){
+			if(isempty()){
+				return;
+			}
+			else if(rear==front){
+				front=-1;
+				rear=-1;
+			}
+			else{
+			front=(front+1)%capacity;	
+			}
+			}
+			
+		int peek(){
+			if((front==-1)||(front>rear)){
+				return -1;
+			}
+			return arr[front];
+		}
+		void display(){
+			if(front==-1){
+				cout<<"Queue is empty";
+				return;
+			}
+			int i=front;
+			do{
+				cout<<arr[i];
+				i=(i+1)%capacity;
+			}while(i!=(rear+1)%capacity);
+			cout<<endl;
+			}
+		
+		};
+		int main(){
+	queue a(4);
+	a.add(8);
+	a.add(4);
+	a.add(4);
+	a.add(4);
+	a.display();
+	a.idelete();
+	a.add(5);
+	a.display();
+	a.idelete();
+	a.display();
+	return 0;
+}
