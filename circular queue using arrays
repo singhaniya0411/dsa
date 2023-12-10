@@ -1,0 +1,99 @@
+#include <iostream>
+
+class CircularQueue {
+private:
+    int* data;
+    int front;
+    int rear;
+    int size;
+    int capacity;
+
+public:
+    CircularQueue(int capacity) : capacity(capacity), size(0), front(-1), rear(-1) {
+        data = new int[capacity];
+    }
+
+    ~CircularQueue() {
+        delete[] data;
+    }
+
+    bool isEmpty() const {
+        return size == 0;
+    }
+
+    bool isFull() const {
+        return size == capacity;
+    }
+
+    int getSize() const {
+        return size;
+    }
+
+    int getFront() const {
+        if (!isEmpty()) {
+            return data[front];
+        } else {
+            std::cerr << "Queue is empty. Cannot get front value." << std::endl;
+            return -1;  // Return a sentinel value in case of error
+        }
+    }
+
+    void enqueue(int element) {
+        if (!isFull()) {
+            if (isEmpty()) {
+                front = rear = 0;
+            } else {
+                rear = (rear + 1) % capacity;
+            }
+
+            data[rear] = element;
+            size++;
+         
+        } else {
+            std::cout << "Queue is full. Cannot enqueue element." << std::endl;
+        }
+    }
+
+    void dequeue() {
+        if (!isEmpty()) {
+           // int removedElement = data[front];
+
+            if (front == rear) {
+                front = rear = -1;  // Reset front and rear when the last element is dequeued
+            } else {
+                front = (front + 1) % capacity;
+            }
+
+            size--;
+          //  std::cout << "Dequeued: " << removedElement << std::endl;
+        } else {
+            std::cout << "Queue is empty. Cannot dequeue element." << std::endl;
+        }
+    }
+};
+
+int main() {
+    CircularQueue queue(5);
+    std::cout << "Is empty? " << (queue.isEmpty() ? "Yes" : "No") << std::endl;
+
+    queue.enqueue(10);
+    queue.enqueue(20);
+    queue.enqueue(30);
+
+    std::cout << "Front value: " << queue.getFront() << std::endl;
+    std::cout << "Queue size: " << queue.getSize() << std::endl;
+
+    //queue.dequeue();
+    queue.enqueue(40);
+    queue.enqueue(50);
+    queue.enqueue(60);
+
+    std::cout << "Is full? " << (queue.isFull() ? "Yes" : "No") << std::endl;
+
+    while (!queue.isEmpty()) {
+        queue.dequeue();
+    }
+    queue.dequeue();
+
+    return 0;
+}
