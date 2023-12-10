@@ -1,0 +1,100 @@
+#include<iostream>
+using namespace std;
+class node{
+    public:
+    int data;
+    node* next;
+    node(int n){
+        data=n;
+        next=0;
+    }
+};
+class clinklist{
+    public: 
+    node* head;
+    clinklist(){
+        head=0;
+    }
+    void insert(int n){
+        node* newnode=new node(n);
+        if(head==0){
+            head=newnode;
+            newnode->next=head;
+            return;
+        }
+        node* temp=head;
+        while(temp->next!=head){
+            temp=temp->next;
+        }
+        temp->next=newnode;
+        newnode->next=head;
+        
+    }
+    void deletenode(int n){
+        if(head==0){
+            return;
+        }
+        if(head->data==n){
+            node* curr=head;
+            node* temp=head;
+            while(temp->next!=head){
+                temp=temp->next;
+            }
+            temp->next=head->next;
+            head=head->next;
+            delete curr;
+            return ;
+        }
+        node* temp=head;
+        node* prev;
+        while(temp->data!=n){
+            prev=temp;
+            temp=temp->next;
+        }
+        prev->next=temp->next;
+        delete temp;
+    }
+    bool search(int key){
+        if(head==0){
+            return false;
+        }
+        if(head->data==key){
+            
+            return true;
+        }else{
+        node* temp=head;
+        while(temp->next!=head){
+            if(temp->data==key){
+                return true;
+            }
+            else{
+            temp=temp->next;
+        }
+        }
+        }
+        return false;
+    }
+    void print(){
+        node* temp=head;
+        do{
+            cout<<temp->data;
+            temp=temp->next;
+        }while(temp!=head);
+        cout<<endl;
+    }
+};
+int main(){
+    clinklist h;
+    h.insert(1);
+    h.insert(2);
+    h.insert(3);
+    h.print();
+    h.deletenode(1);
+    h.print();
+    if(h.search(12)){
+        cout<<"key";
+    }else{
+        cout<<"key dont";
+    }
+    return 0;
+}
