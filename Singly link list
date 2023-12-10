@@ -1,0 +1,233 @@
+#include<iostream>
+using namespace std;
+class node{
+    public:
+    int data;
+    node* next;
+    
+    node(int val){
+        data =val;
+        next=NULL;
+    }
+
+};
+void insertAthead(node* &head,int val){
+    node *newnode;
+    newnode=new node(val);
+    newnode->next=head;
+    head=newnode;
+}
+void insertAtend(node * &head,int val){
+    node *newnode;
+    newnode=new node(val);
+    node* temp=head;
+    while(temp->next!=NULL){
+        temp=temp->next;
+    }
+    temp->next=newnode;
+    
+    
+}
+void insertAtpos(node* &head,int val,int pos){
+    if(pos==0){
+        insertAthead(head,val);
+        return;
+    }
+    node* newnode=new node(val);
+    node* temp;
+    temp=head;
+    int current_pos=0;
+    while(current_pos!=pos-1){
+        temp=temp->next;
+        current_pos++;
+    }
+    //temp is pointing at the post-1;
+    newnode->next=temp->next;
+    temp->next=newnode;
+}
+void insertorder (node * &head, int value){
+    node *newnode = new node (value);
+    if (head == 0){
+        head = newnode;
+    }
+    node *temp = head;
+    node *r;
+    while(temp->data < newnode->data){
+        r = temp;
+        temp = temp->next;
+    }
+    r->next = newnode;
+    newnode->next = temp;
+}
+void display(node* head){
+    node* temp;
+    temp=head;
+    while(temp!=NULL){
+        cout<<temp->data<<"\t";
+        temp=temp->next;
+    }
+    // temp reached at end
+    cout<<"NULL"<<"\n";
+}
+void update(node* &head,int val,int pos){
+    node* temp=head;
+    int current_pos=0;
+    while(current_pos!=pos){
+        temp=temp->next;
+        current_pos++;
+    }
+    //temp at required position
+    temp->data=val;
+}
+void dltAthead(node* &head){
+    node* temp=head;
+    head=head->next;
+    free(temp);
+}
+void dltAtend(node* &head){
+    node* sec_last=head;
+    while(sec_last->next->next!=NULL){
+        sec_last=sec_last->next;
+    }
+    //here sec_last point at the second last.
+    node* temp=sec_last->next;
+    sec_last->next=NULL;
+    free(temp);
+}
+void dltAtpos(node* &head,int pos){
+    if (pos==0){
+        dltAthead(head);
+        return;
+    }
+    int current_pos=0;
+    node* prev=head;
+    while(current_pos!=pos-1){
+        current_pos++;
+        prev=prev->next;
+        
+    }
+    //prev is pointing to second last position
+    node* temp=prev->next;
+    prev->next=prev->next->next;
+    free(temp);
+}
+
+node* reverse(node* &head){
+    node* prevptr=NULL;
+    node* currptr=head;
+    node* nextptr;
+    while(currptr!= NULL){
+        nextptr=currptr->next;
+        currptr->next=prevptr;
+        prevptr=currptr;
+        currptr=nextptr;
+    }
+    return prevptr;
+}
+bool issort(node* &head){
+    node* temp=head;
+    while(temp->next!=NULL){
+        if(temp->data>temp->next->data){
+            return false;
+        }
+        temp=temp->next;
+    }
+    return true;
+}
+void sort(node* &head){
+	node* temp=head;
+	node* p;
+	while(temp->next!=0){
+	    p=temp->next;
+	    if(temp->data>p->data){
+	        swap(temp->data,p->data);
+	    }
+	    temp=temp->next;
+	}
+}
+
+void linearsearch (node * &head, int key){
+    int mode = 0;
+    if (head == 0){
+       cout << "List is empty ";
+    }
+    node *temp = head;
+   
+    while (temp != NULL){
+        
+        if (temp->data == key){
+            mode = 1;
+     	}
+        temp = temp->next;
+    }
+    if (mode == 1){
+        cout << "The key is present in linklist " << endl;
+    }
+    else{
+        cout << "The key is not present in link list " << endl;
+    }
+
+}
+node* merge(node* & head1,node* &head2){
+    node* p1=head1;
+    node* p2=head2;
+    node* dummynode=new node(-1);
+    node* p3=dummynode;
+    while(p1!=NULL && p2!=NULL){
+        if(p1->data>p2->data){
+            p3->next=p2;
+            p2=p2->next;
+        }
+        else{
+            p3->next=p1;
+            p1=p1->next;
+        }
+        p3=p3->next;
+    }
+    return dummynode->next;
+}
+
+
+int main (){
+    node *l;
+    node* m;
+    node* n;
+    node* r;
+    node* newlist;
+    insertAthead(l,1);
+    insertAtend(l,7);
+    insertAthead(l,2);
+    insertAtend(l,3);
+    insertAtpos(l,4,1);
+    
+    display(l);
+  //  dltAthead(l);
+  //  dltAtend(l);
+  //  dltAtpos(l,1);
+    linearsearch(l,2);
+    r=reverse(l);
+    display(r);
+    sort(r);
+    cout<<issort(r)<<"\n";
+    sort(r);
+    sort(r);
+    cout<<issort(r)<<"\n";
+    display(r);
+  return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
