@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+
+class Player {
+private:
+    std::string* names;
+    int* scores;
+    int size;
+    int capacity;
+
+public:
+    Player(int capacity) : capacity(capacity), size(0) {
+        names = new std::string[capacity];
+        scores = new int[capacity];
+    }
+
+    ~Player() {
+        delete[] names;
+        delete[] scores;
+    }
+
+    void addPlayer(const std::string& name, int score) {
+        if (size < capacity) {
+            names[size] = name;
+            scores[size] = score;
+            size++;
+            std::cout << "Player added: " << name << ", Score: " << score << std::endl;
+        } else {
+            std::cout << "Array is full. Cannot add more players." << std::endl;
+        }
+    }
+
+    void displayPlayers() const {
+        if (size > 0) {
+            std::cout << "Player Information:" << std::endl;
+            for (int i = 0; i < size; ++i) {
+                std::cout << "Name: " << names[i] << ", Score: " << scores[i] << std::endl;
+            }
+        } else {
+            std::cout << "No players in the array." << std::endl;
+        }
+    }
+};
+
+int main() {
+    const int capacity = 5;
+    Player playerArray(capacity);
+
+    playerArray.addPlayer("Alice", 100);
+    playerArray.addPlayer("Bob", 75);
+    playerArray.addPlayer("Charlie", 120);
+
+    playerArray.displayPlayers();
+
+    return 0;
+}
