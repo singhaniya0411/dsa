@@ -1,0 +1,297 @@
+#include<iostream>
+using namespace std;
+class Myarray{
+    int *a;
+    int size;
+    public:
+    Myarray(int n){
+        size=n;
+        a = new int[size];
+        for(int i=0;i<size;i++){
+            a[i]=0;
+        }
+    }
+    void input(){
+        cout<<"Enter the elements of array ";
+         for(int i =0;i<size;i++){
+            cin>>a[i];
+        }
+        cout<<"\n";
+    }
+    void show(){
+        cout<<"array is ";
+        for(int i =0;i<size;i++){
+            cout<<a[i]<<"  ";
+        }
+        cout<<"\n";
+    }
+    void sum_N_avg(){
+        float sum=0;
+        float avg=0;
+        for(int i =0;i<size;i++){
+            sum+=a[i];
+        }
+        cout<<"The sum of the array is "<<sum<<"\n";
+        avg=sum/size;
+        cout<<"The average of the array is "<<avg<<"\n";
+    }
+    void min_N_max(){
+        int min=a[0];
+        int max=a[0];
+        for(int i =0;i<size;i++){
+            if(a[i]<min){
+                min=a[i];
+            }
+            else if (a[i]>max){
+                max=a[i];
+            }
+        }
+        cout<<"The minimum and maximum element of the array ara "<<min<<" and "<<max<<" respectively\n";
+    }
+    void concetanate(Myarray  &A){
+        int N_size=size+A.size;
+        int *a1=new int[N_size];
+        for(int i=0;i<size;++i){
+            a1[i]=a[i];
+        }
+        for(int i=0;i<A.size;++i){
+            a1[size+i]=A.a[i];
+        }
+        cout<<"The concetanated array is ";
+        for(int i=0;i<N_size;i++){
+            cout<<a1[i]<<"  ";
+        }
+        cout<<"\n";
+    }
+    void concetanate_oredered(Myarray  &A){
+        int N_size=size+A.size;
+        int *a1=new int[N_size];
+        for(int i=0;i<size;++i){
+            a1[i]=a[i];
+        }
+        for(int i=0;i<A.size;++i){
+            a1[size+i]=A.a[i];
+        }
+        int counter=1;
+        while(counter<N_size){
+            for ( int i =0;i<N_size-counter;i++){
+                if(a1[i+1]<a1[i]){
+                    swap(a1[i+1],a1[i]);
+                }
+            }
+            counter++;
+        }
+        cout<<"The sorted array is ";
+        for(int i =0;i<N_size;i++){
+            cout<<a1[i]<<"  ";
+        }
+        cout<<"\n";
+        
+    }
+    
+    void sorting1(){
+        for(int i=0;i<size-1;i++){
+            for (int j=i+1;j<size;j++){
+                if(a[j]<a[i]){
+                    swap(a[i],a[j]);
+                }
+                
+            }
+        }
+        cout<<"The sorted array is ";
+        for(int i =0;i<size;i++){
+            cout<<a[i]<<"  ";
+        }
+        cout<<"\n";
+        
+    }
+    void sorting2(){
+        for(int i=0;i<size-1;i++){
+            for(int j=0;j<size-i-1;j++){
+                if(a[j]>a[j+1]){
+                    swap(a[j],a[j+1]);
+                }
+                
+            }
+        }
+        cout<<"The sorted array is ";
+        for(int i =0;i<size;i++){
+            cout<<a[i]<<"  ";
+        }
+        cout<<"\n";
+    }
+    void sorting3(){
+        for(int i=0;i<size-1;i++){
+            int j=i+1,temp=a[j];
+            while(temp<a[j-1]&&j>0){
+                a[j]=a[j-1];
+                j--;
+            }
+            a[j]=temp;
+        }
+        cout<<"The sorted array is ";
+        for(int i =0;i<size;i++){
+            cout<<a[i]<<"  ";
+        }
+        cout<<"\n";
+    }
+
+int linearsearch(int key){
+    for(int i=0;i<size;i++){
+        if(key==a[i]){
+            return i;
+        }
+    }
+    return -1;
+}
+int binarysearch(int key){
+    int s=0;
+    int e=size;
+    while(s<=e){
+        int mid=(s+e)/2;
+        if (a[mid]==key){
+            return mid;
+        }
+        else if (a[mid]<key){
+            s=mid+1;
+        }
+        else{
+            e=mid-1;
+        }
+    }
+    return -1;
+}
+};
+
+
+
+int main(){
+    Myarray ob1(6);
+    Myarray ob2(2);
+    ob1.input();
+    ob1.show();
+    int choice;
+    int subchoice1;
+    int subchoice2,subchoice3;
+    while(true){
+        
+        
+        cout<<"PRESS '1' FOR SUM AND AVG OF AN ARRAY "<<"\n";
+        cout<<"PRESS '2' FOR MIN AND MAX OF AN ARRAY "<<"\n";
+        cout<<"PRESS '3' FOR CONCETANATE OF AN ARRAY "<<"\n";
+        cout<<"PRESS '4' FOR SORTING OF AN ARRAY "<<"\n";
+        cout<<"PRESS '5' FOR SEARCHIING IN ARRAY"<<"\n";
+        cout<<"PRESS '10' FOR EXITING THE PROGRAM "<<"\n";
+        cout<<"Enter your choice : ";
+        cin>>choice;
+        
+        if(choice==10){
+            cout<<"exiting the program !!! Goodbye "<<"\n";
+            break;
+        }
+        switch(choice){
+            case 1:
+                ob1.sum_N_avg();
+                break;
+            case 2:
+                ob1.min_N_max();
+                break;
+            case 3:
+                while(true){
+                    cout<<"PRESS 11 FOR SIMPLE CONCATENATE OF ARRAYS"<<"\n";
+                    cout<<"PRESS 12 FOR ORDERED CONCATENATING OF ARRAYS"<<"\n";
+                    cout<<"Press 00 for main menu "<<"\n";
+                    cout<<"Enter your choice : ";
+                    cin>>subchoice1;
+                    if(subchoice1==00){
+                        break;
+                    }
+                    switch(subchoice1){
+                        case 11:
+                            ob2.input();
+                            ob1.concetanate(ob2);
+                            break;
+                        case 12:
+                            ob2.input();
+                            ob1.concetanate_oredered(ob2);
+                            break;
+                        default:
+                            cout<<"Enter a valid key"<<"\n";
+                    }
+                    
+                    
+                }
+                break;
+            case 4:
+                while(true){
+                    cout<<"Press 11 for selection sort "<<"\n";
+                    cout<<"Press 12 for bubble sort "<<"\n";
+                    cout<<"Press 13 for insertion sort "<<"\n";
+                    cout<<"Press 00 for main menu "<<"\n";
+                    cout<<"Enter choice : ";
+                    cin>>subchoice2;
+                    if (subchoice2==00){
+                        break;
+                    }
+                    switch (subchoice2){
+                        case 11:
+                            ob1.sorting1();
+                            break;
+                        case 12:
+                            ob1.sorting2();
+                            break;
+                        case 13:
+                            ob1.sorting3();
+                            break;
+                        default:
+                            cout<<"Enter correct key "<<"\n";
+                    }
+                    
+                
+                }
+                break;
+            case 5:
+                while(true){
+                    cout<<"Press 21 for linear seach method "<<"\n";
+                    
+                    cout<<"Press 22 for binary search "<<"\n";
+                    cout<<"Press 00 for main menu "<<"\n";
+                    cout<<"Enter your choice :";
+                    cin>>subchoice3;
+                    if(subchoice3==00){
+                        break;
+                    }
+                    switch(subchoice3){
+                        case 21:
+                            int key1,index1;
+                            cout<<"Enter key to be find : ";
+                            cin>>key1;
+                            index1=ob1.linearsearch(key1);
+                             if(index1==-1)
+                             cout<<"Element is not present "<<"\n";
+                             else
+                             cout<<"Element is present at "<<index1<<" position "<<"\n";
+                             break;
+                             
+                        case 22:
+                            int key,index;
+                            cout<<"Enter key to be find : ";
+                            cin>>key;
+                            index=ob1.binarysearch(key);
+                             if(index==-1)
+                             cout<<"Element is not present "<<"\n";
+                             else
+                             cout<<"Element is present at "<<index<<" position "<<"\n";
+                             break;
+                        default:
+                            cout<<"Invalid choice "<<"\n";
+                    }
+                }
+            break;
+            default:
+                cout<<"Invalid choice "<<"\n";
+        }
+        
+    }
+    return 0;
+}
